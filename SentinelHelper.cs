@@ -196,7 +196,10 @@ public class SentinelHelper : BaseSettingsPlugin<SentinelHelperSettings>
                             "Please use a sentinel shortcut without modifiers");
                     }
                     else if (DateTime.UtcNow - _lastUseTime > TimeSpan.FromSeconds(1) &&
-                             buttonElement.SentinelData.StateFlags == SentinelDataFlags.Usable &&
+                             buttonElement.SentinelData.State
+                                 is SentinelState.UsableBlue
+                                 or SentinelState.UsableRed
+                                 or SentinelState.UsableYellow &&
                              _typeRuntimeInfo[sentinelType].Predicate?.Function is { } func &&
                              func(_monsterCounts[sentinelType]))
                     {
